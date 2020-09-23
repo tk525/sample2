@@ -1,11 +1,13 @@
 from django_filters import filters
 from django_filters import FilterSet
-from .models import Item
+from .models import Item, Info
 
 
 class MyOrderingFilter(filters.OrderingFilter):
     descending_fmt = '%s （under）'
 
+class InfoFilter(FilterSet):
+    model = Info
 
 class ItemFilter(FilterSet):
 
