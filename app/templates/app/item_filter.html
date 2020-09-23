@@ -27,7 +27,9 @@
         <div class="col-12">
             <a class="btn btn-secondary filtered" style="visibility:hidden" href="/?page=1">searching unlock</a>
             <div class="float-right">
+                {% if request.user.id != message.author.id %}
                 <a class="btn btn-outline-secondary" href="{% url 'create' %}">new create</a>
+                {% endif %}
                 <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal" href="#">search</a>
             </div>
         </div>
@@ -46,7 +48,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">
-                            <p>name</p>
+                            <p>product name</p>
                         </div>
                         <div class="col-9">
                             <p>{{ item.name }}</p>
@@ -54,12 +56,28 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
+                            <p>price</p>
+                        </div>
+                        <div class="col-9">
+                            <p>{{ item.age }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p></p>
+                        </div>
+                        <div class="col-9">
+                            <p>{{ item.memo }}</p>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-3">
                             <p>legisted date</p>
                         </div>
                         <div class="col-9">
                             <p>{{item.created_at|date:"Y/m/d G:i:s"}}</p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-12">
                             <div class="float-right">
@@ -81,10 +99,13 @@
     <div class="row" >
         <div class="col-12">
             <div class="float-right">
+                {% if request.user.id != message.author.id %}
                 <a class="btn btn-outline-secondary" href="{% url 'create' %}">new create</a>
+                {% endif %}
                 <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal" href="#">search</a>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
