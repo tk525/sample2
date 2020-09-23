@@ -1,0 +1,38 @@
+{% extends "./_base.html" %}
+{% block content %} 
+{% load crispy_forms_tags %}
+<div class="container">
+
+    <div>
+        <ul>
+            <li><img src="app/image/hassan.jpg" alt="shoes"></li>
+        </ul>
+    </div>
+    <a class="btn btn-outline-secondary" href="{% url 'index' %}">online store</a>
+
+    <div class="row">
+        <div class="col-12">
+            <ul class="list-group">
+                {% for item in item_list %}
+                <li class="list-group-item">
+                    <!-- <div class="row">
+                        <div class="col-12">
+                            <div class="float-right">
+                                <a class="btn btn-outline-secondary " href="{% url 'detail' item.pk %}">descript</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'update' item.pk %}">edit</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'delete' item.pk %}">delete</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </li>
+                {% empty %}
+                <li class="list-group-item">
+                    empty
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -4,14 +4,21 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 
-from .models import Item
-from .filters import ItemFilter
+from .models import Item, Info
+from .filters import ItemFilter, InfoFilter
 from .forms import ItemForm
 
 
 # Create your views here.
+
+# info一覧画面
+class InfoFilterView(FilterView):
+    model = Info
+
+
 # 検索一覧画面
-class ItemFilterView(LoginRequiredMixin, FilterView):
+# class ItemFilterView(LoginRequiredMixin, FilterView):
+class ItemFilterView(FilterView):
     model = Item
     filterset_class = ItemFilter
     # デフォルトの並び順を新しい順とする
