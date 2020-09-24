@@ -3,13 +3,29 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
+from django.shortcuts import render, redirect
 
-from .models import Item, Info
+from .models import Item, Info, Document
 from .filters import ItemFilter, InfoFilter
 from .forms import ItemForm
 
 
 # Create your views here.
+
+def index_img(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = DocumentForm()
+        obj = Document.objects.all()
+ 
+    return render(request, 'app/templates/app/item_filter.html', {
+        'form': form,
+        'obj': obj
+    })
 
 # info一覧画面
 class InfoFilterView(FilterView):
@@ -53,6 +69,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
+
 
 
 # 更新画面
