@@ -1,6 +1,11 @@
 from django.db import models
 from django.core import validators
 
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to='documents/', default='defo')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 class Info(models.Model):
     SEX_CHOICES = (
         (1, 'man'),
@@ -68,6 +73,10 @@ class Item(models.Model):
         verbose_name='registlation date',
         auto_now_add=True
     )
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to='documents/', default='defo')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 
     # 以下は管理サイト上の表示設定
     def __str__(self):

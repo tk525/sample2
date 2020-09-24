@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import ItemFilterView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView, InfoFilterView
+# from .views import ItemFilterView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView, InfoFilterView
+from .views import *
 from django.contrib import admin
 # from django.urls import path, include 
 
 
 urlpatterns = [
+    path('',  index_img, name='index_img'),
     # 一覧画面
     path('index/',  ItemFilterView.as_view(), name='index'),
     # 詳細画面

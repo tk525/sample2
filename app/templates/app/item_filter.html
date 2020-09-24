@@ -70,6 +70,16 @@
                             <p>{{ item.memo }}</p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p>画像テスト</p>
+                        </div>
+                        <div class="col-3">
+                            <p>{{ item.description }}</p>
+                            <p><img src="{{ item.photo.url }}" width="100" height="100"/></p>
+                            <p>{{ item.uploaded_at }}</p>
+                        </div>
+                    </div>
                     <!-- <div class="row">
                         <div class="col-3">
                             <p>legisted date</p>
