@@ -5,31 +5,35 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
 
-from .models import Item, Info, Document
+from .models import Item, Info
 from .filters import ItemFilter, InfoFilter
-from .forms import ItemForm
+from .forms import ItemForm, InfoForm
 
 
 # Create your views here.
 
-def index_img(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = DocumentForm()
-        obj = Document.objects.all()
- 
-    return render(request, 'app/templates/app/item_filter.html', {
-        'form': form,
-        'obj': obj
-    })
-
 # info一覧画面
 class InfoFilterView(FilterView):
     model = Info
+
+class InfoCreateView(LoginRequiredMixin, CreateView):
+    model = Info
+    form_class = InfoForm
+    success_url = reverse_lazy('')
+
+class InfoDetailView(LoginRequiredMixin, DetailView):
+    model = Info
+
+class InfoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Info
+    form_class = ItemForm
+    success_url = reverse_lazy('')
+
+class InfoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Info
+    success_url = reverse_lazy('')
+
+
 
 
 # 検索一覧画面
@@ -69,6 +73,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
+
 
 
 

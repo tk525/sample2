@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item, Document
+from .models import Item, Info
 
 
 class ItemForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class ItemForm(forms.ModelForm):
                     'memo': forms.Textarea(attrs={'rows':4}),
                   }
 
-# class DocumentForm(forms.ModelForm):
-#     class Meta:
-#         model = Document
-#         fields = ('description', 'photo',)
+class InfoForm(forms.ModelForm):
+    class Meta:
+        model = Info
+        fields = ('name',)

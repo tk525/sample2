@@ -3,27 +3,31 @@
 {% load crispy_forms_tags %}
 <div class="container">
 
-    <div>
-        <ul>
-            <li><img src="app/image/hassan.jpg" alt="shoes"></li>
-        </ul>
-    </div>
-    <a class="btn btn-outline-secondary" href="{% url 'index' %}">online store</a>
+    <a class="btn btn-outline-secondary" href="{% url 'info_create' %}">create</a>
 
     <div class="row">
         <div class="col-12">
             <ul class="list-group">
-                {% for item in item_list %}
+                {% for info in info_list %}
                 <li class="list-group-item">
-                    <!-- <div class="row">
+                    <div class="row">
+                        <div class="col-3">
+                            <p>name</p>
+                        </div>
+                        <div class="col-9">
+                            <p>{{ info.name }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
                         <div class="col-12">
                             <div class="float-right">
-                                <a class="btn btn-outline-secondary " href="{% url 'detail' item.pk %}">descript</a>
-                                <a class="btn btn-outline-secondary " href="{% url 'update' item.pk %}">edit</a>
-                                <a class="btn btn-outline-secondary " href="{% url 'delete' item.pk %}">delete</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'info_detail' info.pk %}">descript</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'info_update' info.pk %}">edit</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'info_delete' info.pk %}">delete</a>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </li>
                 {% empty %}
                 <li class="list-group-item">
