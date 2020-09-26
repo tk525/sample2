@@ -14,7 +14,12 @@ class ItemForm(forms.ModelForm):
                     'memo': forms.Textarea(attrs={'rows':4}),
                   }
 
+
 class InfoForm(forms.ModelForm):
+
+    image = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}),
+    )
     class Meta:
         model = Info
-        fields = ('name',)
+        fields = ('name','image')
