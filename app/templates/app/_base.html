@@ -12,6 +12,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="{% static "app/css/app.css" %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -31,20 +32,24 @@
                     <a class="nav-link" href="{% url 'index'%}">online</a>
                 </li>
             </ul>
-            <ul class="navbar-nav mr-auto">
-                {% if request.user.id != message.author.id %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
-                </li>
-                {% else %}
-                <li>
-                    <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
-                </li>
-                {% endif %}
-            </ul>
+            <div class="row">
+
+                <ul class="navbar-nav col-auto">
+                    {% if request.user.id != message.author.id %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
+                    </li>
+                    {% endif %}
+                </ul>
+
+            </div>
         </div>
         <!-- /.navbar-collapse -->
     </nav>

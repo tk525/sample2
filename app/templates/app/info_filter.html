@@ -1,33 +1,160 @@
 {% extends "./_base.html" %}
 {% block content %} 
 {% load crispy_forms_tags %}
+<style>
+/* 参考　https://yuyauver98.me/css-animation-slidein/#i-3 */
+.TopDown{
+  animation: SlideIn_TD 1.6s ;
+}
+/* CSSアニメーションの設定 */
+@keyframes SlideIn_TD {
+  0% {
+    opacity: 0;/*初期状態では透明に*/
+    transform: translateY(-64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.DownTop{
+  animation: SlideIn_DT 1.6s ;
+}
+/* CSSアニメーションの設定 */
+@keyframes SlideIn_DT {
+  0% {
+    opacity: 0;/*初期状態では透明に*/
+    transform: translateY(64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.video_loop{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    /* min-width: 100%;
+    min-height: 100%; */
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background-size: cover;
+  }
+@media (aspect-ratio: 16/9), (min-aspect-ratio: 16/9) {
+  video { 
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.video-wrap {
+    position: relative;
+  }
+p {
+    font-family: serif;          
+    color: rgb(113, 113, 113);
+    /* position: absolute; */
+    left: 30%;
+    top: 200px;
+    z-index: 1;
+}
+video {
+    position: absolute;
+    display: block;
+    margin: 0 0 0 auto;
+}
+.css-br::before {
+    content: "\A" ;
+    white-space: pre;
+  }
+
+
+
+
+
+
+#message {
+  /* font-family: Meiryo, "Hiragino Kaku Gothic Pro W3",sans-serif; */
+  text-align: center;
+  /* margin-top: 150px; */
+  color: #fff;
+
+  color: #e74c3c;
+  animation: bg-color 10s infinite;
+  -webkit-animation: bg-color 10s infinite;
+}
+@-webkit-keyframes bg-color {
+  0% { color: #e74c3c; }
+  20% { color: #f1c40f; }
+  40% { color: #1abc9c; }
+  60% { color: #3498db; }
+  80% { color: #9b59b6; }
+  100% { color: #e74c3c; }
+}
+@keyframes bg-color {
+  0% { color: #e74c3c; }
+  20% { color: #f1c40f; }
+  40% { color: #1abc9c; }
+  60% { color: #3498db; }
+  80% { color: #9b59b6; }
+  100% { color: #e74c3c; }
+}
+}
+
+
+
+
+</style>
+
 <div class="container">
+    <div class="col-12" style="top: 10px;">
+        <div class="row">
+            {% load static%}
+            <img class="DownTop col-6" src="{% static "app/images/wesner.jpg"%}"  style="width: 50vw; height: 50vw;"/>
+            {% load static%}
+            <img class="TopDown col-6" src="{% static "app/images/buezo.jpg"%}"  style="width: 50vw; height: 50vw;"/>
+        </div>
+    </div>
+    
+    <div class="row fixed-top justify-content-md-center" style="top: 50%; font-size:3vw; font-family: 'Teko', sans-serif;">
+      <a id="message" class="col-md-auto" style="color: lightblue;">would you ready to go out in the world?</a>
+    </div>
 
-    <a class="btn btn-outline-secondary" href="{% url 'info_create' %}">create</a>
-
-    <div class="row">
+    <div class="row fixed-top justify-content-md-center" style="position:fixed; top:70%; right:50px; left:50px;">
         <div class="col-12">
+            {% if request.user.id != message.author.id %} 
+            <a class="btn btn-outline-secondary" href="{% url 'info_create' %}">create</a>
+            {% endif %}
             <ul class="list-group">
                 {% for info in info_list %}
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col-3">
-                            <p>name</p>
+                      <div class="col-2">
+                        <a class="btn btn-outline-secondary " href="{% url 'info_detail' info.pk %}">go</a>
+                      </div>
+                        <div class="col-2">
+                            <p>{{ info.created_at|date:"M j, Y" }}</p>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                             <p>{{ info.name }}</p>
                         </div>
                     </div>
-                    
+                    {% if request.user.id != message.author.id %}           
                     <div class="row">
                         <div class="col-12">
                             <div class="float-right">
-                                <a class="btn btn-outline-secondary " href="{% url 'info_detail' info.pk %}">descript</a>
                                 <a class="btn btn-outline-secondary " href="{% url 'info_update' info.pk %}">edit</a>
                                 <a class="btn btn-outline-secondary " href="{% url 'info_delete' info.pk %}">delete</a>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </li>
                 {% empty %}
                 <li class="list-group-item">
@@ -37,6 +164,8 @@
             </ul>
         </div>
     </div>
+
+
 </div>
 
 {% endblock %}
