@@ -4,12 +4,29 @@ from django.core import validators
 
 class Info(models.Model):
 
+    SEX_CHOICES = (
+        (1, 'S/S'),
+        (2, 'A/W'),
+    )
+
     name = models.CharField(
-        verbose_name='product name',
+        verbose_name='info name',
         max_length=200,
     )
     # image = models.ImageField(upload_to='info/', default='defo')
 
+    season = models.IntegerField(
+        verbose_name='season',
+        choices=SEX_CHOICES,
+        default=1
+    )
+
+    info = models.TextField(
+        verbose_name='information',
+        max_length=300,
+        blank=True,
+        null=True,
+    )
     created_at = models.DateTimeField(
         verbose_name='registlation date',
         auto_now_add=True

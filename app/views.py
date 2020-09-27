@@ -15,18 +15,19 @@ from .forms import ItemForm, InfoForm
 # info一覧画面
 class InfoFilterView(FilterView):
     model = Info
+    
 
 class InfoCreateView(LoginRequiredMixin, CreateView):
     model = Info
     form_class = InfoForm
     success_url = reverse_lazy('')
 
-class InfoDetailView(LoginRequiredMixin, DetailView):
+class InfoDetailView(DetailView):
     model = Info
 
 class InfoUpdateView(LoginRequiredMixin, UpdateView):
     model = Info
-    form_class = ItemForm
+    form_class = InfoForm
     success_url = reverse_lazy('')
 
 class InfoDeleteView(LoginRequiredMixin, DeleteView):

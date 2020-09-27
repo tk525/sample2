@@ -17,9 +17,11 @@ class ItemForm(forms.ModelForm):
 
 class InfoForm(forms.ModelForm):
 
-    image = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'multiple': True}),
-    )
     class Meta:
         model = Info
-        fields = ('name','image')
+        fields = ('name','season','info')
+        widgets = {
+                    'name': forms.TextInput(attrs={'placeholder':'for example：AirLight-20'}),
+                    'season': forms.RadioSelect(),
+                    'info': forms.Textarea(),
+                  }

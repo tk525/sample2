@@ -88,6 +88,7 @@
                             <p>{{item.created_at|date:"Y/m/d G:i:s"}}</p>
                         </div>
                     </div> -->
+                    {% if request.user.id != message.author.id %}
                     <div class="row">
                         <div class="col-12">
                             <div class="float-right">
@@ -97,6 +98,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </li>
                 {% empty %}
                 <li class="list-group-item">
