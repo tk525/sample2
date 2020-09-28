@@ -88,17 +88,17 @@
                             <p>{{item.created_at|date:"Y/m/d G:i:s"}}</p>
                         </div>
                     </div> -->
-                    {% if request.user.id != message.author.id %}
                     <div class="row">
                         <div class="col-12">
                             <div class="float-right">
-                                <a class="btn btn-outline-secondary " href="{% url 'detail' item.pk %}">descript</a>
+                                {% if request.user.id != message.author.id %}
                                 <a class="btn btn-outline-secondary " href="{% url 'update' item.pk %}">edit</a>
                                 <a class="btn btn-outline-secondary " href="{% url 'delete' item.pk %}">delete</a>
+                                {% endif %}
+                                <a class="btn btn-outline-secondary " href="{% url 'detail' item.pk %}">descript</a>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
                 </li>
                 {% empty %}
                 <li class="list-group-item">

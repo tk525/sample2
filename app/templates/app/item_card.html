@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-3">
-        <p>name</p>
+        <p>product name</p>
     </div>
     <div class="col-9">
         <p>{{ item.name }}</p>
@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="col-3">
-        <p>age</p>
+        <p>price</p>
     </div>
     <div class="col-9">
         <p>{{ item.age }}</p>
@@ -24,7 +24,7 @@
 </div>
 <div class="row">
     <div class="col-3">
-        <p>add information</p>
+        <!-- <p>add information</p> -->
     </div>
     <div class="col-9">
         <p>{{ item.memo|linebreaksbr }}</p>
@@ -32,9 +32,6 @@
 </div>
 <div class="row">
     <div class="col-3">
-        <p>legistate dates</p>
-    </div>
-    <div class="col-9">
-        <p>{{ item.created_at|date:"Y/m/d G:i:s" }}</p>
+        <p><img src="{{ item.photo.url }}" height="500px"/></p>
     </div>
 </div>
