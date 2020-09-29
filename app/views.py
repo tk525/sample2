@@ -65,7 +65,7 @@ class ItemFilterView(FilterView):
 
 
 # 詳細画面
-class ItemDetailView(LoginRequiredMixin, DetailView):
+class ItemDetailView(DetailView):
     model = Item
 
 

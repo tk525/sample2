@@ -1,40 +1,13 @@
 <div class="row">
-    <div class="col-3">
-        <p>name</p>
+    <div class="col-7 justify-content-end" align="right" style="right: 50px;">
+        <p><img src="{{ item.photo.url }}" height="500px"/></p>
     </div>
-    <div class="col-9">
-        <p>{{ item.name }}</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-3">
-        <p>age</p>
-    </div>
-    <div class="col-9">
-        <p>{{ item.age }}</p>
+    <div class="col-5" style="margin-top: 50px;">
+        <p style="font-size: 0.7cm;">{{ item.name }}</p>
+        <p style="font-size: 0.5cm;">$ {{ item.age }}</p>
+        <p style="margin-top: 50px;">{{ item.memo|linebreaksbr }}</p>
+        <p>{{ item.description }}</p>
     </div>
 </div>
-<div class="row">
-    <div class="col-3">
-        <p>gender</p>
-    </div>
-    <div class="col-9">
-        <p>{{ item.get_sex_display }}</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-3">
-        <p>add information</p>
-    </div>
-    <div class="col-9">
-        <p>{{ item.memo|linebreaksbr }}</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-3">
-        <p>legistate dates</p>
-    </div>
-    <div class="col-9">
-        <p>{{ item.created_at|date:"Y/m/d G:i:s" }}</p>
-    </div>
-</div>
+
+
