@@ -17,7 +17,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">sample2</a>
+        <a class="navbar-brand" href="{% url ''%}">sample2</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false"
             aria-label="ナビゲーションの切替">
             <span class="navbar-toggler-icon"></span>
@@ -32,22 +32,21 @@
                     <a class="nav-link" href="{% url 'index'%}">online</a>
                 </li>
             </ul>
-            <div class="row">
 
-                <ul class="navbar-nav col-auto">
-                    {% if request.user.id != message.author.id %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
-                    </li>
-                    {% endif %}
-                </ul>
+            <ul class="navbar-nav col-auto">
+                {% if request.user.id != message.author.id %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
+                </li>
+                {% endif %}
+            </ul>
 
             </div>
         </div>
