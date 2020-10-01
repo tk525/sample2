@@ -20,5 +20,7 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')), # 追記
-    path('accounts/',include('accounts.urls')),
+    # path('accounts/',include('accounts.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
+
 ]

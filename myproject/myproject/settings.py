@@ -122,6 +122,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/'
-# LOGIN_URL = 'login' # ログインしていないときのリダイレクト先
-LOGIN_REDIRECT_URL = 'index' # ログイン後のリダイレクト先
-LOGOUT_REDIRECT_URL = 'index' # ログアウト後のリダイレクト先
+AUTH_USER_MODEL = 'accounts.User'

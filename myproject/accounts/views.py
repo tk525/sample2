@@ -6,11 +6,13 @@ from django.urls import reverse_lazy # 追記
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .forms import LoginForm
+from .forms import *
+from .models import *
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
-class IndexView(TemplateView):
+# class IndexView(TemplateView):
+class IndexView(CreateView):
     # template_name = "index.html"
     form_class = LoginForm
     template_name = "create.html"

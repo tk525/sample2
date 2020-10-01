@@ -1,8 +1,19 @@
 from django.contrib.auth import forms as auth_forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 
-class LoginForm(auth_forms.AuthenticationForm):
-    '''ログインフォーム'''
-    def __init__(self, *args, **kw):
-        super().__init__(*args, **kw)
+User = get_user_model()
+
+class LoginForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        if User.USERNAME_FIELD == 'email':
+            fields = ('email',)
+        else:
+            fields = ('username', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['placeholder'] = field.label
+            field.widget.attrs['class'] = 'form-control'
