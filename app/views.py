@@ -5,18 +5,21 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
 
-from .models import Item, Info
-from .filters import ItemFilter, InfoFilter
-from .forms import ItemForm, InfoForm
+from .models import *
+from .filters import *
+from .forms import *
 
 
-# Create your views here.
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserCreateForm
+    success_url = reverse_lazy('index')
 
-# info一覧画面
+
+# info
 class InfoFilterView(FilterView):
     model = Info
     
-
 class InfoCreateView(LoginRequiredMixin, CreateView):
     model = Info
     form_class = InfoForm
@@ -36,9 +39,7 @@ class InfoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 
-
-# 検索一覧画面
-# class ItemFilterView(LoginRequiredMixin, FilterView):
+# online / item
 class ItemFilterView(FilterView):
     model = Item
     filterset_class = ItemFilter
@@ -63,29 +64,19 @@ class ItemFilterView(FilterView):
 
         return super().get(request, **kwargs)
 
-
-# 詳細画面
 class ItemDetailView(DetailView):
     model = Item
 
-
-# 登録画面
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
 
-
-
-
-# 更新画面
 class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
 
-
-# 削除画面
 class ItemDeleteView(LoginRequiredMixin, DeleteView):
     model = Item
     success_url = reverse_lazy('index')
