@@ -43,6 +43,7 @@
                 </li>
                 {% else %}
                 <li>
+                    <!-- <a class="nav-link" href="{% url 'admin:login' %}">login</a>     -->
                     <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
                 </li>
                 {% endif %}
@@ -54,7 +55,8 @@
     </nav>
 
     <div>
-        <a href="{% url 'signup' %}">popo</a>
+        <a href="{% url 'signup' %}">signup</a>
+        <a href="{% url 'profile' %}">profile</a>
     </div>
 
 
