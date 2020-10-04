@@ -5,12 +5,19 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
 
-from .models import Item, Info
-from .filters import ItemFilter, InfoFilter
-from .forms import ItemForm, InfoForm
+from .models import *
+from .filters import *
+from .forms import *
 
 
 # Create your views here.
+
+class SignUpView(CreateView):
+    form_class = UserCreateForm
+    success_url = reverse_lazy('')
+    template_name = 'app/user_signup.html'
+
+
 
 # info一覧画面
 class InfoFilterView(FilterView):

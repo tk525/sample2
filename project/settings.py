@@ -57,7 +57,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join('app','templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,7 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL='admin:login'
+# LOGIN_URL='admin:login'
+AUTH_USER_MODEL = 'app.User'
 LOGOUT_REDIRECT_URL='/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
