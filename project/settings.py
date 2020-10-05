@@ -125,8 +125,11 @@ STATIC_URL = '/static/'
 # LOGIN_URL='admin:login'
 AUTH_USER_MODEL = 'app.User'
 LOGOUT_REDIRECT_URL='/'
+LOGIN_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

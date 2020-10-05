@@ -18,9 +18,13 @@ from django.urls import path, include
 from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from app.views import InfoFilterView
+
 
 urlpatterns = [
-    path('', include('app.urls')),
+    path('',  InfoFilterView.as_view(), name="head"),
+    # path('', include('app.urls')),
+
     path('admin/', admin.site.urls),
     path('app/', include('app.urls')),
     path('app/', include('django.contrib.auth.urls')),

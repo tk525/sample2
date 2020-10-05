@@ -36,15 +36,22 @@
             <ul class="navbar-nav col-auto">
                 {% if request.user.id != message.author.id %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
+                    <a class="nav-link" href="{% url 'profile' %}">profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
                 </li>
                 {% else %}
                 <li>
-                    <!-- <a class="nav-link" href="{% url 'admin:login' %}">login</a>     -->
                     <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'signup' %}">signup</a>   
+                </li>
+                {% endif %}
+                {% if request.user.id != message.author.id and request.user.user_or_owner == 0 %} 
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
                 </li>
                 {% endif %}
             </ul>
@@ -54,10 +61,7 @@
         <!-- /.navbar-collapse -->
     </nav>
 
-    <div>
-        <a href="{% url 'signup' %}">signup</a>
-        <a href="{% url 'profile' %}">profile</a>
-    </div>
+
 
 
     {% block content %} 

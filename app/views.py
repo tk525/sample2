@@ -4,14 +4,16 @@ from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .filters import *
 from .forms import *
 
-
+User = get_user_model()
 
 class SignUpView(CreateView):
+    model = User
     form_class = UserCreateForm
     success_url = reverse_lazy('')
     template_name = 'app/user_signup.html'
@@ -50,7 +52,7 @@ class InfoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # 検索一覧画面
-# class ItemFilterView(LoginRequiredMixin, FilterView):
+
 class ItemFilterView(FilterView):
     model = Item
     filterset_class = ItemFilter

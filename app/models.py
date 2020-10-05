@@ -36,9 +36,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
 
+    user_or_owner = models.BooleanField(
+        _('user_or_owner'),
+        default=False,
+    )
+
     is_staff = models.BooleanField(
         _('staff status'),
-        default=False,
+        default=True,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
     is_active = models.BooleanField(
@@ -49,6 +54,11 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    is_superuser = models.BooleanField(
+        _('superuser'),
+        default=True,
+    )
+
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()

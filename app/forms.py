@@ -7,17 +7,22 @@ from .models import *
 User = get_user_model()
 
 
-class UserCreateForm(UserCreationForm):
+class UserCreateForm(UserCreationForm, forms.Form):
+
+    user_or_owner = forms.IntegerField(initial=1)
 
     class Meta:
         model = User
         if User.USERNAME_FIELD == 'email':
-            fields = ('email',)
+            fields = ('email','user_or_owner')
         else:
-            fields = ('username', 'email')
+            fields = ('email','user_or_owner')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.fields['user_or_owner'].widget = forms.HiddenInput()
+
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
