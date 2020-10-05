@@ -23,8 +23,6 @@ from app.views import InfoFilterView
 
 urlpatterns = [
     path('',  InfoFilterView.as_view(), name="head"),
-    # path('', include('app.urls')),
-
     path('admin/', admin.site.urls),
     path('app/', include('app.urls')),
     path('app/', include('django.contrib.auth.urls')),

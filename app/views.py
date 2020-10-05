@@ -12,6 +12,7 @@ from .forms import *
 
 User = get_user_model()
 
+
 class SignUpView(CreateView):
     model = User
     form_class = UserCreateForm
@@ -36,13 +37,16 @@ class InfoCreateView(LoginRequiredMixin, CreateView):
     form_class = InfoForm
     success_url = reverse_lazy('')
 
+
 class InfoDetailView(DetailView):
     model = Info
+
 
 class InfoUpdateView(LoginRequiredMixin, UpdateView):
     model = Info
     form_class = InfoForm
     success_url = reverse_lazy('')
+
 
 class InfoDeleteView(LoginRequiredMixin, DeleteView):
     model = Info
@@ -50,19 +54,11 @@ class InfoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 
-
-# 検索一覧画面
-
 class ItemFilterView(FilterView):
     model = Item
     filterset_class = ItemFilter
-    # デフォルトの並び順を新しい順とする
     queryset = Item.objects.all().order_by('-created_at')
-
-    # クエリ未指定の時に全件検索を行うために以下のオプションを指定（django-filter2.0以降）
     strict = False
-
-    # 1ページあたりの表示件数
     paginate_by = 10
 
     # 検索条件をセッションに保存する or 呼び出す
@@ -78,28 +74,22 @@ class ItemFilterView(FilterView):
         return super().get(request, **kwargs)
 
 
-# 詳細画面
 class ItemDetailView(DetailView):
     model = Item
 
 
-# 登録画面
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
 
 
-
-
-# 更新画面
 class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy('index')
 
 
-# 削除画面
 class ItemDeleteView(LoginRequiredMixin, DeleteView):
     model = Item
     success_url = reverse_lazy('index')
