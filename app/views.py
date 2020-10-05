@@ -1,16 +1,30 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-from .models import Item, Info
-from .filters import ItemFilter, InfoFilter
-from .forms import ItemForm, InfoForm
+from .models import *
+from .filters import *
+from .forms import *
+
+User = get_user_model()
+
+class SignUpView(CreateView):
+    model = User
+    form_class = UserCreateForm
+    success_url = reverse_lazy('')
+    template_name = 'app/user_signup.html'
 
 
-# Create your views here.
+class ProfileView(LoginRequiredMixin, View):
+
+    def get(self, *args, **kwargs):
+        return render(self.request,'app/user_profile.html')
+
+
 
 # info一覧画面
 class InfoFilterView(FilterView):
@@ -38,7 +52,7 @@ class InfoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # 検索一覧画面
-# class ItemFilterView(LoginRequiredMixin, FilterView):
+
 class ItemFilterView(FilterView):
     model = Item
     filterset_class = ItemFilter

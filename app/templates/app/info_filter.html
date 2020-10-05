@@ -75,10 +75,6 @@ video {
   }
 
 
-
-
-
-
 #message {
   /* font-family: Meiryo, "Hiragino Kaku Gothic Pro W3",sans-serif; */
   text-align: center;
@@ -105,14 +101,8 @@ video {
   80% { color: #9b59b6; }
   100% { color: #e74c3c; }
 }
-}
-
-
-
-
 </style>
-
-<div class="container">
+ <div class="container">
     <div class="col-12" style="top: 10px;">
         <div class="row">
             {% load static%}
@@ -128,7 +118,7 @@ video {
 
     <div class="row fixed-top justify-content-md-center" style="position:fixed; top:70%; right:50px; left:50px;">
         <div class="col-12">
-            {% if request.user.id != message.author.id %} 
+            {% if request.user.id != message.author.id and request.user.user_or_owner == 0 %} 
             <a class="btn btn-outline-secondary" href="{% url 'info_create' %}">create</a>
             {% endif %}
             <ul class="list-group">
