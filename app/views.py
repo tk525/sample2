@@ -73,6 +73,21 @@ class ItemFilterView(FilterView):
 
         return super().get(request, **kwargs)
 
+    #いいねボタンみたいなbuy
+    def Buys(request, user_id, item_id):
+        if request.method == 'POST':
+            query = Buys.objects.filter(user_id=user_id, item_id=item_id)
+            if query.count() == 0:
+                buys_tbl = Buys()
+                buys_tbl.user_id = user_id
+                buys_tbl.item_id = item_id
+                buys_tbl.save()
+            else:
+                query.delete()
+
+            # response json
+            # return JsonResponse({"status": "responded by views.py"})
+
 
 class ItemDetailView(DetailView):
     model = Item

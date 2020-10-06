@@ -122,7 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# LOGIN_URL='admin:login'
 AUTH_USER_MODEL = 'app.User'
 LOGOUT_REDIRECT_URL='/'
 LOGIN_REDIRECT_URL = '/'

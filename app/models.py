@@ -1,10 +1,10 @@
-from django.db import models
-from django.core import validators
+from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
+from django.core import validators
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
-
+from django.db import models
 
 
 class UserManager(UserManager):
@@ -156,3 +156,10 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'item'
         verbose_name_plural = 'item'
+
+
+class Buys(models.Model):
+    buys = models.ForeignKey('Item', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    # user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
