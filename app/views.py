@@ -5,6 +5,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db import connection
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 from .models import *
 from .filters import *
@@ -17,13 +21,13 @@ class SignUpView(CreateView):
     model = User
     form_class = UserCreateForm
     success_url = reverse_lazy('')
-    template_name = 'app/user_signup.html'
+    template_name = 'templates/app/user_signup.html'
 
 
 class ProfileView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
-        return render(self.request,'app/user_profile.html')
+        return render(self.request,'templates/app/user_profile.html')
 
 
 
@@ -73,20 +77,34 @@ class ItemFilterView(FilterView):
 
         return super().get(request, **kwargs)
 
-    #いいねボタンみたいなbuy
-    def Buys(request, user_id, item_id):
-        if request.method == 'POST':
-            query = Buys.objects.filter(user_id=user_id, item_id=item_id)
-            if query.count() == 0:
-                buys_tbl = Buys()
-                buys_tbl.user_id = user_id
-                buys_tbl.item_id = item_id
-                buys_tbl.save()
-            else:
-                query.delete()
 
-            # response json
-            # return JsonResponse({"status": "responded by views.py"})
+
+
+
+
+
+    #いいねボタンみたいなbuy
+    def Buys(request):
+        item = get_object_or_404(Item, id=request.POST.get('item_id'))
+        boought = False
+        if item.buys.filter(id=request.user.id).exists():
+            item.buys.remove(request.user)
+            bought = False
+        else:    
+            item.buys.add(request.user)
+            bought = True
+
+        context={
+            'item': item,
+            'bought': bought,
+        }    
+        if request.is_ajax():
+            html = render_to_string('templates/app/item_filter.html', context, request=request )
+            return JsonResponse({'form': html})
+
+
+
+
 
 
 class ItemDetailView(DetailView):

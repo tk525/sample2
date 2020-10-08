@@ -7,6 +7,13 @@ from django.utils import timezone
 from django.db import models
 
 
+# class Buys(models.Model):
+#     buys = models.ForeignKey('Item', on_delete=models.CASCADE)
+#     user = models.ForeignKey('User', on_delete=models.CASCADE)
+#     # user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+
 class UserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
@@ -146,8 +153,10 @@ class Item(models.Model):
     )
     description = models.CharField(max_length=255, blank=True)
     photo = models.ImageField(upload_to='documents/', default='defo')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    buys = models.ManyToManyField(User, related_name='buys', blank=True)
+
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     # 以下は管理サイト上の表示設定
     def __str__(self):
@@ -156,10 +165,3 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'item'
         verbose_name_plural = 'item'
-
-
-class Buys(models.Model):
-    buys = models.ForeignKey('Item', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    # user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)

@@ -1,26 +1,13 @@
 {% extends "./_base.html" %}
 {% block content %} 
 {% load crispy_forms_tags %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script> -->
+
 
 <style>
     p.sample img:hover {
         opacity: 0.6;
     }
-
-.buy{
-    display: none;
-}
-.buy_label{
-    margin-left: 10px;
-    cursor: pointer;
-    color: #cccccc;
-    border: none;  /* 枠線を消す */
-    outline: none; /* クリックしたときに表示される枠線を消す */
-    background: transparent; /* 背景の灰色を消す */
-}
-input:checked + .buy_label{
-    color: black;
-} 
 </style>
 
 <div class="container">
@@ -63,10 +50,6 @@ input:checked + .buy_label{
         </div>
     </div>
 
-
-
-
-
     <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
@@ -95,24 +78,39 @@ input:checked + .buy_label{
 
 
 
-                    <!-- <a class="btn btn-outline-secondary text-muted" href="{% url 'detail' item.pk %}" onclick="Buys(event, '1', '{{ item.id }}')">buy</a> -->
-                    
-                    
-                    {% if item.memo  == 1 %}
-                    <input type="checkbox" class="buy text-muted" data_id="{{ item.id }}" id="buys_{{ item.id }}">
-                    {% else %}
-                    <input type="checkbox" class="buy text-muted" data_id="{{ item.id }}" id="buys_{{ item.id }}" checked="checked">
-                    {% endif %}
-                    <label for="buys_{{ item.id }}" class="buy_label">○</label>
 
-                    <ul>
-                        <!-- <li><a role="button" aria-pressed="false" onclick="likes(event, '1', '{{ row.id }}')">いいね！<span>({{ row.likes_cnt }})</span></a></li> -->
-                        <!-- {% if item.is_like == 1 %}
-                            <li><a role="button" aria-pressed="true" onclick="likes(event, '1', '{{ row.id }}')">いいね！<span>({{ row.likes_cnt }})</span></a></li>
-                        {% else %}
-                            <li><a role="button" aria-pressed="false" onclick="likes(event, '1', '{{ row.id }}')">いいね！<span>({{ row.likes_cnt }})</span></a></li>
-                        {% endif %} -->
-                    </ul>
+
+
+
+
+
+
+
+
+
+                    <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn" style="display: none;">a</button>
+
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'buys' %}" method="POST">
+                      {% csrf_token %}
+                      {% if bought %}
+                       <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn"><i class="fas fa-cart-plus"></i></button>
+                       {% else %}
+                       <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn"><i class="fas fa-shopping-cart"></i></button>      
+                      {% endif %}
+                    </form>
+                  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -136,43 +134,6 @@ input:checked + .buy_label{
           </div>
         </div>
       </div>
-
-
-
-
-
-    <!-- <div class="row">
-        <div class="col-12">
-            <ul class="list-group">
-                {% for item in item_list %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-6">
-                            <p><img src="{{ item.photo.url }}" width="200px" height="200px"/></p>
-                        </div>
-                        <div class="col-6" style="margin-top: 30px;">
-                            <p style="font-size: 0.5cm;">{{ item.name }}</p>
-                            <p style="font-size: 0.4cm;">$ {{ item.age }}</p>
-                            <p>{{ item.memo }}</p>
-                            <div class="float-right">
-                                {% if request.user.id != message.author.id %}
-                                <a class="btn btn-outline-secondary " href="{% url 'update' item.pk %}">edit</a>
-                                <a class="btn btn-outline-secondary " href="{% url 'delete' item.pk %}">delete</a>
-                                {% endif %}
-                                <a class="btn btn-outline-secondary " href="{% url 'detail' item.pk %}">descript</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                {% empty %}
-                <li class="list-group-item">
-                    empty
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div> -->
-
     <div class="row" >
         <div class="col-12">
             <div class="float-right">
@@ -191,34 +152,4 @@ input:checked + .buy_label{
     </div>
 
 </div>
-
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.0.js" 
-integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" 
-crossorigin="anonymous"></script>
-<script type="text/javascript">
-$('.buy').click(function(){
-var id;
-id = $(this).attr("data_id");
-$.ajax(
-    {
-        type:"POST",
-        url: "buy",
-        data:{
-            star: id
-            }
-    })
-});
-</script>
-
-
-
-
-
-
 {% endblock %}
