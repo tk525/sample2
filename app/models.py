@@ -7,11 +7,30 @@ from django.utils import timezone
 from django.db import models
 
 
-# class Buys(models.Model):
-#     buys = models.ForeignKey('Item', on_delete=models.CASCADE)
-#     user = models.ForeignKey('User', on_delete=models.CASCADE)
-#     # user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
+class Item(models.Model):
+
+    SEX_CHOICES = ((1, 'man'), (2, 'woman'), (3, 'child'))
+
+    name = models.CharField( verbose_name='product name', max_length=200)
+    age = models.IntegerField( verbose_name='price', validators=[validators.MinValueValidator(1)], blank=True, null=True)
+    sex = models.IntegerField( verbose_name='gender', choices=SEX_CHOICES, default=1)
+    memo = models.TextField( verbose_name='add information', max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField( verbose_name='registlation date', auto_now_add=True)
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to='documents/', default='defo')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    # 以下は管理サイト上の表示設定
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'item'
+        verbose_name_plural = 'item'
+
+    def buy_s(self):
+        count = User.objects.filter(buys=self)
+        return count
 
 
 class UserManager(UserManager):
@@ -43,32 +62,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
 
-    user_or_owner = models.BooleanField(
-        _('user_or_owner'),
-        default=False,
-    )
+    user_or_owner = models.BooleanField(_('user_or_owner'), default=False)
 
-    is_staff = models.BooleanField(
-        _('staff status'),
-        default=True,
-        help_text=_('Designates whether the user can log into this admin site.'),
-    )
-    is_active = models.BooleanField(
-        _('active'),
-        default=True,
-        help_text=_(
+    is_staff = models.BooleanField( _('staff status'), default=True, help_text=_('Designates whether the user can log into this admin site.'))
+    is_active = models.BooleanField( _('active'), default=True, help_text=_(
             'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
-        ),
-    )
-    is_superuser = models.BooleanField(
-        _('superuser'),
-        default=True,
-    )
-
+            'Unselect this instead of deleting accounts.'))
+    is_superuser = models.BooleanField( _('superuser'), default=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
+    buys = models.ManyToManyField(Item, related_name='buys', blank=True)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -85,83 +89,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-          
+
 
 class Info(models.Model):
 
-    SEX_CHOICES = (
-        (1, 'S/S'),
-        (2, 'A/W'),
-    )
+    SEX_CHOICES = ((1, 'S/S'), (2, 'A/W'))
 
-    name = models.CharField(
-        verbose_name='info name',
-        max_length=200,
-    )
-    # image = models.ImageField(upload_to='info/', default='defo')
-
-    season = models.IntegerField(
-        verbose_name='season',
-        choices=SEX_CHOICES,
-        default=1
-    )
-
-    info = models.TextField(
-        verbose_name='information',
-        max_length=300,
-        blank=True,
-        null=True,
-    )
-    created_at = models.DateTimeField(
-        verbose_name='registlation date',
-        auto_now_add=True
-    )
-
-
-class Item(models.Model):
-
-    SEX_CHOICES = (
-        (1, 'man'),
-        (2, 'woman'),
-        (3, 'child'),
-    )
-
-    name = models.CharField(
-        verbose_name='product name',
-        max_length=200,
-    )
-    age = models.IntegerField(
-        verbose_name='price',
-        validators=[validators.MinValueValidator(1)],
-        blank=True,
-        null=True,
-    )
-    sex = models.IntegerField(
-        verbose_name='gender',
-        choices=SEX_CHOICES,
-        default=1
-    )
-    memo = models.TextField(
-        verbose_name='add information',
-        max_length=300,
-        blank=True,
-        null=True,
-    )
-    created_at = models.DateTimeField(
-        verbose_name='registlation date',
-        auto_now_add=True
-    )
-    description = models.CharField(max_length=255, blank=True)
-    photo = models.ImageField(upload_to='documents/', default='defo')
-
-    buys = models.ManyToManyField(User, related_name='buys', blank=True)
-
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    # 以下は管理サイト上の表示設定
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'item'
-        verbose_name_plural = 'item'
+    name = models.CharField( verbose_name='info name', max_length=200)
+    season = models.IntegerField( verbose_name='season', choices=SEX_CHOICES, default=1)
+    info = models.TextField( verbose_name='information', max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField( verbose_name='registlation date', auto_now_add=True)

@@ -1,0 +1,23 @@
+{% extends "./_base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+{% for user_buy in user_buys %}
+<div style="background-color: lightblue;">
+    <div>
+        <a>{{ user_buy.name }}</a>
+    </div>
+    <div>
+        <a>{{ user_buy.price }}</a>
+    </div>
+    <div>
+        <img style="max-width: 200px;" src="/media/{{ user_buy.photo }}">
+    </div>
+</div>
+{% endfor %}
+<div>
+    <a>total price $ {{ total_price }}</a>
+</div>
+
+{% endblock %}

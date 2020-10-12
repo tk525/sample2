@@ -26,7 +26,8 @@ urlpatterns = [
     path('buys/', ItemFilterView.Buys, name='buys'),
 
 
-    path('signup/', SignUpView.as_view(), name='signup'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('signup/', UserSignUpView.as_view(), name='signup'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('bought/<int:pk>/', UserBoughtView.as_view(), name='bought'),
 
 ]
