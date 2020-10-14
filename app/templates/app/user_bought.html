@@ -1,0 +1,48 @@
+{% extends "./_base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container" style="background-color:rgb(186, 186, 186); padding-top: 10px;">
+    <div style="background-color: white;">
+        {% for user_buy in user_buys %}
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{ user_buy.name }}</h4>
+              </div>
+              <div class="card-body">
+                <img style="max-width: 200px;" src="/media/{{ user_buy.photo }}">
+                <h1 class="card-title pricing-card-title">$ {{ user_buy.age }}</h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>{{ user_buy.memo }}</li>
+                </ul>
+                <form action="{% url 'bought_cancel' %}" method="get">
+                    {% csrf_token %}
+                    <input type="hidden"  value="{{ user_buy.id }}" name="title">
+                    <input type="submit" id="button" name="button" value="CANCEL">
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endfor %}
+
+<div class="container" style="background-color:rgb(126, 126, 126); padding-top: 10px;">
+<div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">your total price</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">$ {{ total_price }}</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>your email-address</li>
+          <li>ここっここ</li>
+        </ul>
+        <button type="button" class="btn btn-lg btn-block ">購入ボタン未</button>
+      </div>
+    </div>
+</div>   
+</div>
+{% endblock %}
