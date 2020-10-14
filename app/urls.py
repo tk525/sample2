@@ -8,7 +8,6 @@ from .views import *
 
 
 urlpatterns = [
-    # path('',  index_img, name='index_img'),
     path('',  InfoFilterView.as_view(), name=''),
 
     path('info_create/', InfoCreateView.as_view(), name='info_create'),
@@ -30,4 +29,5 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('bought/<int:pk>/', UserBoughtView.as_view(), name='bought'),
 
+    path('bought_cancel/', UserBoughtCancelView.as_view(), name='bought_cancel'),
 ]
