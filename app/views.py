@@ -19,6 +19,60 @@ User = get_user_model()
 
 
 
+class UserBoughtDecideView(LoginRequiredMixin, DeleteView):
+
+    template = loader.get_template('templates/app/user_bought.html')
+
+    def database_save(request):
+
+        model = Shipments
+        shipments = Shipments()
+
+        users_list_onece=request
+
+        for i in range(1) :
+            shipments.mail = users_list_onece['address']
+            shipments.product_name = users_list_onece['name']
+            shipments.price = users_list_onece['age']
+            shipments.sex = users_list_onece['sex']
+            shipments.save()
+
+        return
+
+
+    def pre_dbsave(request):
+
+        users_list=request
+
+        for i in range(len(users_list['buys'])):
+            ulb=users_list['buys'][i]
+            ulb['address']=users_list['address']
+
+            UserBoughtDecideView.database_save(ulb)
+
+        return
+
+
+    def get(self, *args, **kwargs):
+
+        model = User
+        users_list = {}
+
+        if self.request.GET.getlist('user_address', None):
+            users_list['address']=self.request.GET.getlist('user_address', None)[0] #a@gmail.com
+
+        users = User.objects.get(id=self.request.user.id) #a@gmail.com
+        user_buys_queryset = users.buys.all() #<QuerySet [<Item: 1>, <Item: 2>]>
+        users_list['buys']=list(user_buys_queryset.values()) 
+
+        UserBoughtDecideView.pre_dbsave(users_list)
+
+        users.buys.clear()
+
+        return redirect('index')
+
+
+
 class UserBoughtCancelView(LoginRequiredMixin, DeleteView):
     model = User
     template = loader.get_template('templates/app/user_bought.html')
@@ -30,13 +84,13 @@ class UserBoughtCancelView(LoginRequiredMixin, DeleteView):
         user_buys_queryset = users.buys.all() #<QuerySet [<Item: 1>, <Item: 2>]>
         user_buys=list(user_buys_queryset.values()) #{'id': 1, 'name': '1', 'age': 1, 'sex': 1, 'memo': '1', 'created_at': datetime.datetime(2020, 10, 12, 10, 16, 13, 443189, tzinfo=<UTC>), 'description': '1', 'photo': 'documents/pexels-melvin-buezo-2529148_lsypz0n.jpg', 'uploaded_at': datetime.datetime(2020, 10, 12, 10, 16, 13, 444163, tzinfo=<UTC>)}, {'id': 2, 'name': '2', 'age': 2, 'sex': 1, 'memo': '2', 'created_at': datetime.datetime(2020, 10, 12, 10, 37, 48, 983327, tzinfo=<UTC>), 'description': '2', 'photo': 'documents/pexels-la-miko-3616764_0qKhRNP.jpg', 'uploaded_at': datetime.datetime(2020, 10, 12, 10, 37, 48, 984092, tzinfo=<UTC>)}]
 
-        if self.request.GET.get('title', None):
+        if self.request.GET.get('user_buy', None):
             str_value = self.request.GET.get('title', None) #2
-            int_value = int(str_value)-1 #1
 
-        if self.request.GET.getlist('title', None):
-            str_value=self.request.GET.getlist('title', None)[0]
-
+        if self.request.GET.getlist('user_buy', None):
+            str_value=self.request.GET.getlist('user_buy', None)[0]
+            
+        int_value = int(str_value)-1 #1
         users.buys.remove(user_buys_queryset[int_value])
 
         return redirect('index')
@@ -61,6 +115,7 @@ class UserBoughtView(LoginRequiredMixin, FilterView):
         context={
             'user_buys':user_buys,
             'total_price':total_price,
+            'user_address':users,
         }
 
         return HttpResponse(template.render(context))
