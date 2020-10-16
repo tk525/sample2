@@ -19,7 +19,7 @@
                 </ul>
                 <form action="{% url 'bought_cancel' %}" method="get">
                     {% csrf_token %}
-                    <input type="hidden"  value="{{ user_buy.id }}" name="title">
+                    <input type="hidden"  value="{{ user_buy.id }}" name="user_buy">
                     <input type="submit" id="button" name="button" value="CANCEL">
                 </form>
             </div>
@@ -38,9 +38,13 @@
         <h1 class="card-title pricing-card-title">$ {{ total_price }}</h1>
         <ul class="list-unstyled mt-3 mb-4">
           <li>your email-address</li>
-          <li>ここっここ</li>
+          <li>{{ user_address }}</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block ">購入ボタン未</button>
+        <form action="{% url 'bought_decide' %}" method="get">
+            {% csrf_token %}
+            <input type="hidden"  value="{{ user_address }}" name="user_address">
+            <input type="submit" id="button" name="button" value="DECIDE">
+        </form>
       </div>
     </div>
 </div>   

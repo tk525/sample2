@@ -30,4 +30,5 @@ urlpatterns = [
     path('bought/<int:pk>/', UserBoughtView.as_view(), name='bought'),
 
     path('bought_cancel/', UserBoughtCancelView.as_view(), name='bought_cancel'),
+    path('bought_decide/', UserBoughtDecideView.as_view(), name='bought_decide'),
 ]
