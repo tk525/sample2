@@ -50,7 +50,7 @@ class UserBoughtDecideView(LoginRequiredMixin, DeleteView):
 
             UserBoughtDecideView.database_save(ulb)
 
-        return redirect('index')
+        return
 
 
     def get(self, *args, **kwargs):
@@ -65,7 +65,11 @@ class UserBoughtDecideView(LoginRequiredMixin, DeleteView):
         user_buys_queryset = users.buys.all() #<QuerySet [<Item: 1>, <Item: 2>]>
         users_list['buys']=list(user_buys_queryset.values()) 
 
-        return UserBoughtDecideView.pre_dbsave(users_list)
+        UserBoughtDecideView.pre_dbsave(users_list)
+
+        users.buys.clear()
+
+        return redirect('index')
 
 
 

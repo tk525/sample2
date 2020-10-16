@@ -82,7 +82,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    buys = models.ManyToManyField(Item, through="UserItemRelation" ,related_name='buys', blank=True)
+    buys = models.ManyToManyField(Item ,related_name='buys', blank=True)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -99,17 +99,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-
-class UserItemRelation(models.Model):
-
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField( verbose_name='registlation date', auto_now_add=True)
-
-    class Meta:
-        verbose_name = 'user_buys_list'
-        verbose_name_plural = 'user_buys_list'
 
 
 
