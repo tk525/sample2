@@ -27,8 +27,14 @@ urlpatterns = [
 
     path('signup/', UserSignUpView.as_view(), name='signup'),
     path('profile/', UserProfileView.as_view(), name='profile'),
-    path('bought/<int:pk>/', UserBoughtView.as_view(), name='bought'),
 
+
+    path('bought/<int:pk>/', UserBoughtView.as_view(), name='bought'),
     path('bought_cancel/', UserBoughtCancelView.as_view(), name='bought_cancel'),
     path('bought_decide/', UserBoughtDecideView.as_view(), name='bought_decide'),
+
+
+    path('shipment/', ShipmentView.as_view(), name='shipment'),
+    path('shipment_delete/<int:pk>/', ShipmentDeleteView.as_view(), name='shipment_delete'),
+
 ]
