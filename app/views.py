@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template import loader
+import itertools
 
 from .models import *
 from .filters import *
@@ -84,7 +85,6 @@ class UserBoughtCancelView(LoginRequiredMixin, DeleteView):
     model = User
     template = loader.get_template('templates/app/user_bought.html')
 
-
     def get(self, *args, **kwargs):
 
         users = User.objects.get(id=self.request.user.id) #a@gmail.com
@@ -92,13 +92,14 @@ class UserBoughtCancelView(LoginRequiredMixin, DeleteView):
         user_buys=list(user_buys_queryset.values()) #{'id': 1, 'name': '1', 'age': 1, 'sex': 1, 'memo': '1', 'created_at': datetime.datetime(2020, 10, 12, 10, 16, 13, 443189, tzinfo=<UTC>), 'description': '1', 'photo': 'documents/pexels-melvin-buezo-2529148_lsypz0n.jpg', 'uploaded_at': datetime.datetime(2020, 10, 12, 10, 16, 13, 444163, tzinfo=<UTC>)}, {'id': 2, 'name': '2', 'age': 2, 'sex': 1, 'memo': '2', 'created_at': datetime.datetime(2020, 10, 12, 10, 37, 48, 983327, tzinfo=<UTC>), 'description': '2', 'photo': 'documents/pexels-la-miko-3616764_0qKhRNP.jpg', 'uploaded_at': datetime.datetime(2020, 10, 12, 10, 37, 48, 984092, tzinfo=<UTC>)}]
 
         if self.request.GET.get('user_buy', None):
-            str_value = self.request.GET.get('title', None) #2
+            str_value = self.request.GET.get('user_buy', None) 
 
-        if self.request.GET.getlist('user_buy', None):
-            str_value=self.request.GET.getlist('user_buy', None)[0]
-            
-        int_value = int(str_value)-1 #1
-        users.buys.remove(user_buys_queryset[int_value])
+        for i in range(len(user_buys_queryset)):
+            if int(str_value) == user_buys[i]['id']:
+                ub = user_buys[i]
+                ub_id = i
+
+        users.buys.remove(user_buys_queryset[ub_id])
 
         return redirect('index')
 

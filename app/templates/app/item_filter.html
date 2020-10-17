@@ -1,8 +1,6 @@
 {% extends "./_base.html" %}
 {% block content %} 
 {% load crispy_forms_tags %}
-<!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script> -->
-
 
 <style>
     p.sample img:hover {
@@ -76,47 +74,14 @@
                   <p class="card-text">{{ item.memo }}</p>
                   <div class="d-flex justify-content-between align-items-center">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn" style="display: none;">a</button>
 
                     {% if request.user.is_authenticated %}
                     <form action="{% url 'buys' %}" method="POST">
                       {% csrf_token %}
-                      {% if bought %}
-                       <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn"><i class="fas fa-cart-plus"></i></button>
-                       {% else %}
                        <button type="submit" id="buys" name="item_id" value="{{item.id}}" class="btn"><i class="fas fa-shopping-cart"></i></button>      
-                      {% endif %}
                     </form>
                   {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     {% if request.user.id != message.author.id and request.user.user_or_owner == 0 %} 
                     <div class="btn-group">
