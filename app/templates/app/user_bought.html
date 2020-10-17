@@ -2,7 +2,6 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
 <div class="container" style="background-color:rgb(186, 186, 186); padding-top: 10px;">
     <div style="background-color: white;">
         {% for user_buy in user_buys %}
@@ -29,24 +28,24 @@
 {% endfor %}
 
 <div class="container" style="background-color:rgb(126, 126, 126); padding-top: 10px;">
-<div class="card-deck mb-3 text-center">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">your total price</h4>
+  <div class="card-deck mb-3 text-center">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">your total price</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$ {{ total_price }}</h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>your email-address</li>
+            <li>{{ user_address }}</li>
+          </ul>
+          <form action="{% url 'bought_decide' %}" method="get">
+              {% csrf_token %}
+              <input type="hidden"  value="{{ user_address }}" name="user_address">
+              <input type="submit" id="button" name="button" value="DECIDE">
+          </form>
+        </div>
       </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">$ {{ total_price }}</h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>your email-address</li>
-          <li>{{ user_address }}</li>
-        </ul>
-        <form action="{% url 'bought_decide' %}" method="get">
-            {% csrf_token %}
-            <input type="hidden"  value="{{ user_address }}" name="user_address">
-            <input type="submit" id="button" name="button" value="DECIDE">
-        </form>
-      </div>
-    </div>
-</div>   
+  </div>   
 </div>
 {% endblock %}
