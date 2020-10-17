@@ -1,0 +1,64 @@
+{% extends "./_base.html" %}
+{% block content %} 
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <div class="col-12">
+        <ul class="list-group">
+            {% for shipments in shipments_list %}
+            <li class="list-group-item">
+                <div class="row" style="background-color: rgb(201, 201, 201);">
+                    <div class="col-2">
+                        <p>mail</p>
+                    </div>
+                    <div class="col-2">
+                        <a>product name</a>
+                    </div>
+                    <div class="col-2">
+                        <a>sex</a>
+                    </div>
+                    <div class="col-2">
+                        <a>price</a>
+                    </div>
+                    <div class="col-2">
+                        <p>date</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <p>{{ shipments.mail }}</p>
+                    </div>
+                    <div class="col-2">
+                        <a>{{ shipments.product_name }}</a>
+                    </div>
+                    <div class="col-2">
+                        <a>{{ shipments.sex }}</a>
+                    </div>
+                    <div class="col-2">
+                        <a>$ {{ shipments.price }}</a>
+                    </div>
+                    <div class="col-2">
+                        <p>{{ shipments.created_at|date:"M j, Y" }}</p>
+                    </div>
+                </div>
+                {% if request.user.id != message.author.id %}           
+                <div class="row">
+                    <div class="col-12">
+                        <div class="float-right">
+                            <a class="btn btn-outline-secondary " href="{% url 'shipment_delete' shipments.pk %}">delete</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item">
+                empty
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -37,22 +37,25 @@
             <ul class="navbar-nav col-auto">
                 {% if request.user.id != message.author.id %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">profile</a>
+                    <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-shoe-prints" style="color: rgb(160, 207, 90); padding-right: 5px;"></i>profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:logout'%}">logout</a>
+                    <a class="nav-link" href="{% url 'admin:logout'%}"><i class="fas fa-shoe-prints" style="color: rgb(160, 207, 90); padding-right: 5px;"></i>logout</a>
                 </li>
                 {% else %}
                 <li>
-                    <a class="nav-link" href="{% url 'admin:login' %}">login</a>    
+                    <a class="nav-link" href="{% url 'admin:login' %}"><i class="fas fa-shoe-prints" style="color: rgb(160, 207, 90); padding-right: 5px;"></i>login</a>    
                 </li>
                 <li>
-                    <a class="nav-link" href="{% url 'signup' %}">signup</a>   
+                    <a class="nav-link" href="{% url 'signup' %}"><i class="fas fa-shoe-prints" style="color: rgb(160, 207, 90); padding-right: 5px;"></i>signup</a>   
                 </li>
                 {% endif %}
                 {% if request.user.id != message.author.id and request.user.user_or_owner == 0 %} 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index'%}">owner</a>
+                    <a class="nav-link" href="{% url 'admin:index'%}"><i class="fas fa-shoe-prints"></i>owner</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shipment'%}"><i class="fas fa-shoe-prints"></i>shipment list</a>
                 </li>
                 {% endif %}
             </ul>

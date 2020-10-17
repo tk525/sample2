@@ -17,6 +17,13 @@ from .forms import *
 
 User = get_user_model()
 
+class ShipmentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Shipments
+    success_url = reverse_lazy('shipment')
+
+class ShipmentView(LoginRequiredMixin, FilterView):
+
+    model = Shipments
 
 
 class UserBoughtDecideView(LoginRequiredMixin, DeleteView):
