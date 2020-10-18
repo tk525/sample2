@@ -23,10 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zlqr)*uwsv8zqfwnjk2d)isms(x=g4ha4-w5q%uc2=0r2whi(0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 ALLOWED_HOSTS = ['*']
 
@@ -89,6 +93,8 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -128,6 +134,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+if not DEBUG:
+    SECRET_KEY = os.environ['SECRET_KEY']
+    import django_heroku #追加
+    django_heroku.settings(locals()) #追加
+
 AUTH_USER_MODEL = 'app.User'
 LOGOUT_REDIRECT_URL='/'
 LOGIN_REDIRECT_URL = '/'
@@ -139,15 +150,4 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-DATABASES['default'].update(db_from_env)
-
-if not DEBUG:
-    SECRET_KEY = os.environ['SECRET_KEY']
-    import django_heroku
-    django_heroku.settings(locals())
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-if 'DYNO' in os.environ:
-    django_heroku.settings(locals())
