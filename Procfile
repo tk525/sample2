@@ -1,1 +1,1 @@
-web: python project.wsgi --log-file -
+web: python manage.py --log-file -
