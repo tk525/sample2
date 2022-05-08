@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: python project.wsgi.application --log-file -
